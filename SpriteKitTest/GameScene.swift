@@ -15,6 +15,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let colors: [UIColor] = [.red, .orange, .yellow, .green, .blue, .purple]
     
+    var shapes: [SKShapeNode] = []
+    
     override func didMove(to view: SKView) {
         //physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
     }
@@ -40,6 +42,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let location = CGPoint(x: UIScreen.main.bounds.width * CGFloat(arc4random_uniform(100)) / 100, y: UIScreen.main.bounds.height)
             spawnBall(location: location, color: colors.randomElement()!)
             timeInterval = currentTime
+            
+            if shapes.count > 250 {
+                shapes[0].removeFromParent()
+                shapes.remove(at: 0)
+            }
         }
     }
     
@@ -49,5 +56,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.fillColor = color
         ball.physicsBody = SKPhysicsBody(circleOfRadius: 25)
         self.addChild(ball)
+        self.shapes.append(ball)
     }
 }
